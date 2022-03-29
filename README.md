@@ -12,6 +12,7 @@ Access Policies
 
 
 Description of the Topology
+TODO upload image
 This repository includes code defining the infrastructure below.
 
 The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the "D*mn Vulnerable Web Application"
@@ -19,40 +20,12 @@ Load balancing ensures that the application will be highly available, in additio
 Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the file systems of the VMs on the network, as well as watch system metrics, such as CPU usage; attempted SSH logins; sudo escalation failures; etc.
 The configuration details of each machine may be found below.
 
-
-
-Name
-Function
-IP Address
-Operating System
-
-
-
-
-Jump Box
-Gateway
-10.0.0.4
-Linux
-
-
-DVWA 1
-Web Server
-10.0.0.5
-Linux
-
-
-DVWA 2
-Web Server
-10.0.0.6
-Linux
-
-
-ELK
-Monitoring
-10.0.0.8
-Linux
-
-
+| Name     |   Function  | IP Address | Operating System |
+|----------|-------------|------------|------------------|
+| Jump Box | Gateway     | 10.0.0.4   | Linux            |
+| DVWA 1   | Web Server  | 10.0.0.5   | Linux            |
+| DVWA 2   | Web Server  | 10.0.0.6   | Linux            |
+| ELK      | Monitoring  | 10.0.0.8   | Linux            |
 
 In addition to the above, Azure has provisioned a load balancer in front of all machines except for the jump box. The load balancer's targets are organized into the following availability zones:
 
@@ -78,54 +51,21 @@ Note: Your answer will be different!
 Machines within the network can only be accessed by each other. The DVWA 1 and DVWA 2 VMs send traffic to the ELK server.
 A summary of the access policies in place can be found in the table below.
 
-
-
-Name
-Publicly Accessible
-Allowed IP Addresses
-
-
-
-
-Jump Box
-Yes
-64.72.118.76
-
-
-ELK
-No
-10.0.0.1-254
-
-
-DVWA 1
-No
-10.0.0.1-254
-
-
-DVWA 2
-No
-10.0.0.1-254
-
-
-
+| Name     | Publicly Accessible | Allowed IP Addresses |
+|----------|---------------------|----------------------|
+| Jump Box | Yes                 | 10.0.0.4             |
+| ELK      | No                  | 10.0.0.1-254         |
+| DVWA 1   | No                  | 10.0.0.1-254         |
+| DVWA 2   | No                  | 10.0.0.1-254         |
 
 Elk Configuration
 Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because...
 
-TODO: What is the main advantage of automating configuration with Ansible?
+The main advantage of automating with ansible is it speads up the configuration process of multiple devices.
 
 The playbook implements the following tasks:
 
-TODO: In 3-5 bullets, explain the steps of the ELK installation play. E.g., install Docker; download image; etc.
-...
-...
-
 The following screenshot displays the result of running docker ps after successfully configuring the ELK instance.
-
-
-TODO: Update the image file path with the name of your screenshot of docker ps output:
-
-
 
 The playbook is duplicated below.
 
@@ -179,8 +119,6 @@ The playbook is duplicated below.
           - 5601:5601
           - 9200:9200
           - 5044:5044
-
-
 
 Target Machines & Beats
 This ELK server is configured to monitor the DVWA 1 and DVWA 2 VMs, at 10.0.0.5 and 10.0.0.6, respectively.
@@ -255,24 +193,9 @@ $ cp project-1/files/* ./files
 This copies the playbook files to the correct place.
 Next, you must create a hosts file to specify which VMs to run each playbook on. Run the commands below:
 
-$ cd /etc/ansible
-$ cat > hosts <<EOF
-[webservers]
-10.0.0.5
-10.0.0.6
-
-[elk]
-10.0.0.8
-EOF
-
-
 After this, the commands below run the playbook:
 
-$ cd /etc/ansible
 $ ansible-playbook install_elk.yml elk
-$ ansible-playbook install_filebeat.yml webservers
-$ ansible-playbook install_metricbeat.yml webservers
-
 
 To verify success, wait five minutes to give ELK time to start up.
-Then, run: curl http://10.0.0.8:5601. This is the address of Kibana. If the installation succeeded, this command should print HTML to the console.
+Then, run: curl http://10.0.0.5:5601. This is the address of Kibana. If the installation succeeded, this command should print HTML to the console.
