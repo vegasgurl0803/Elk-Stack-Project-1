@@ -12,7 +12,7 @@ Access Policies
 
 
 Description of the Topology
-TODO upload image
+![Topology](Elk-Stack-Project-1/Solved.png)
 This repository includes code defining the infrastructure below.
 
 The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the "D*mn Vulnerable Web Application"
